@@ -1,11 +1,16 @@
 Predicting Overall Athlete Wellness and Injury Risk in Collegiate Tennis Players: A Machine
 Learning Approach
+
 FRANCISCO ERRAMUSPE ALVAREZ, Department of Computer Science and Software Engineering,
 Monmouth University, USA
+
 SHOBHARANI POLASA, Department of Computer Science and Software Engineering, Monmouth
 University, USA
+
 WEIHAO QU, Department of Computer Science and Software Engineering, Monmouth University, USA
+
 JAY WANG, Department of Computer Science and Software Engineering, Monmouth University, USA
+
 The rapid development of machine learning has positively impacted every aspect of life, including the field of
 sports. This study investigates the application of machine learning (ML) to predict overall athlete wellness and
 potential injury risk in collegiate tennis players, aiming to assist coaches and trainers in identifying athletes at
@@ -20,10 +25,12 @@ further data collection and model refinement to enhance generalizability and cli
 add some about deep learning results, and the comparison between XGBoost..
 Additional Key Words and Phrases: Athlete Wellness, Injury Prevention, Machine Learning, Wearable Tech-
 nology, Collegiate Tennis, XGBoost, Linear Regression, Logistic Regression, Decision Tree, Random Forest
+
 ACM Reference Format:
 Francisco Erramuspe Alvarez, Shobharani Polasa, Weihao Qu, and Jay Wang. 2024. Predicting Overall Athlete
 Wellness and Injury Risk in Collegiate Tennis Players: A Machine Learning Approach. 1, 1 (September 2024),
 17 pages. https://doi.org/10.1145/nnnnnnn.nnnnnnn
+
 1 INTRODUCTION
 Optimizing athletic performance while minimizing the risk of injury is crucial in professional sports.
 Achieving this balance requires a comprehensive understanding of the diverse factors influencing
@@ -41,6 +48,7 @@ and Software Engineering, Monmouth University, 400 Cedar Avenue, West Long Branc
 jwang@monmouth.edu, Department of Computer Science and Software Engineering, Monmouth University, 400 Cedar
 Avenue, West Long Branch, New Jersey, 07764, USA.
 © 2024 Copyright held by the owner/author(s). Publication rights licensed to ACM.
+
 This is the author’s version of the work. It is posted here for your personal use. Not for redistribution. The definitive Version
 of Record was published in , To overcome the shortness of only relying on subjective observation data in recent machine
 learning-based performance prediction and injury production models, The advent of wearable
@@ -54,6 +62,7 @@ objective information such as an athlete’s physiological responses, training l
 and subjective insights, including feelings, stress, pain, and fatigue. This comprehensive approach
 offers a more complete understanding of an athlete’s condition, enabling the development of more
 objective and personalized interventions.
+
 This study explores the potential of machine learning (ML) to leverage this data and predict
 overall athlete wellness, as well as the risk of potential injuries. While contact sports like football,
 soccer, and rugby tend to have the highest injury rates, non-contact sports such as track and field,
@@ -85,10 +94,14 @@ recovery, can significantly increase the susceptibility to injury. Therefore, by
 from both models, coaches and trainers gain a comprehensive understanding of an athlete’s well-
 being. This allows for informed decisions, such as modifying training intensity or implementing
 load management strategies, to optimize performance while mitigating injury risk.
+
 2 RELATED WORK
+
 The application of machine learning (ML) in sports analytics has earned significant attention in
 recent years, particularly in predicting athlete performance and injury risk. Several studies have Predicting Overall Athlete Wellness and Injury Risk in Collegiate Tennis Players: A Machine Learning
+
 Approach 3
+
 explored various ML methodologies to help enhance athletic performance and mitigate injury risks,
 providing a foundation upon which the current study builds.
 Claudino et al. [2 ] provided a systematic review of ML applications in sports injury prediction
@@ -99,7 +112,9 @@ complex, high-dimensional datasets. Similarly, Van Eetvelde et al. [ 23] emphasi
 in identifying injury risk factors and developing predictive models that assist in proactive injury
 prevention strategies. Overall, related studies focus on considering two factors: Machine learning
 models and Data.
+
 2.1 Tennis
+
 One work studies the association and predictive ability of several markers of internal workload on
 risk of injury in high-performance junior tennis players and shows that a high acute workload is
 only one of the many factors associated with injury, and by itself, has low predictive ability for
@@ -123,7 +138,9 @@ the players’ regular training, match might reveal more constructive inner info
 players than just statistics data. The investigation [ 11] indicates an acute increase in load was
 associated with increased injury risk after the analysis of the workload and self-reported injuries
 in junior tennis players.
+
 2.2 Machine Learning Models
+
 Several studies have focused on college baseball athletes, utilizing various machine learning models
 to predict both performance and the likelihood of injury. These insights reinforce the rationale
 behind our choice of ML models, such as XGBoost, known for its ability to handle diverse feature
@@ -158,7 +175,9 @@ Our research similarly employs advanced ML models, including XGBoost and neural 
 architectures, our study aims to enhance prediction accuracy and model robustness, addressing
 some of the limitations noted by Zhao [25], such as the generalizability of models across different
 sports and genders.
+
 2.3 Data Choice
+
 The selection of data is also crucial in accurately predicting performance and assessing injury risks.
 Integration of Wearable Technology and Self-Reported Data. The integration of wearable technol-
 ogy data with self-reported metrics has been a recurring theme in sports analytics research. It has
@@ -172,12 +191,16 @@ models. Our study similarly amalgamates data from wearable devices, workout logs
 and athlete surveys to create a multifaceted dataset. This comprehensive data integration facilitates
 a more nuanced understanding of athlete wellness and injury risk, enabling the development of
 personalized intervention strategies.
+
 Time-Series Data. Recent advancements in deep learning, particularly with models like Multi-
 Layer Perceptrons (MLP) and Long Short-Term Memory (LSTM) networks, have shown promise
 in capturing temporal dependencies and complex nonlinear relationships in time-series data. In
 sports like basketball [20], volleyball [3 ], tennis, and soccer [ 12 ], data is typically collected over
 seasons, aligning with the characteristics of time series data. Our implementation of MLP and
-LSTM models aims to leverage these strengths, enabling the prediction of an athlete’s physical Predicting Overall Athlete Wellness and Injury Risk in Collegiate Tennis Players: A Machine Learning
+LSTM models aims to leverage these strengths, enabling the prediction of an athlete’s physical Predicting Overall Athlete Wellness and Injury Risk in Collegiate Tennis 
+
+Players: A Machine Learning
+
 Approach 5
 capability and readiness based on their physiological and activity metrics over time. This approach
 not only complements traditional ML models but also addresses the temporal dynamics that are
@@ -190,6 +213,7 @@ feature importance analyses to identify the most significant predictors of athle
 risk, thereby providing actionable insights to coaches and trainers. This emphasis on explainability
 aligns with the broader trend in ML research towards transparent and interpretable models, which
 are essential for gaining trust and facilitating informed decision-making in sports management.
+
 2.4 Limitations and Future Directions
 Despite the advancements, existing studies often grapple with limitations such as small sample sizes,
 data imbalance, and the generalizability of models across different populations and sports [ 20, 25 ].
@@ -203,6 +227,8 @@ to this growing field by developing a comprehensive ML framework that integrates
 sources to predict overall athlete wellness and injury risk in collegiate tennis players. By building
 on the methodologies and insights from prior research, we aim to advance the application of ML in
 creating safer and more effective training programs for athletes.
+
+
 3 METHODS
 3.1 Participants
 Data were collected from nine collegiate tennis players (Male: 5, Female: 4; Age: 20.3 ± 1.5 years;
@@ -241,6 +267,7 @@ performance, and injury risk. The integration of subjective self-reports, object
 measurements, sleep assessments, workout details, and performance metrics facilitated a compre-
 hensive understanding of each athlete’s condition. This holistic approach is essential for developing
 personalized interventions and enhancing predictive modeling.
+
 3.3 System Architecture
 Figure ?? illustrates the overall architecture of our athlete wellness and injury risk prediction
 system. This framework integrates data from various sources, processes it through multiple stages,
@@ -254,6 +281,7 @@ Boost Regressor). The outputs from these models are combined to calculate an Ath
 Score (ARS), which provides a comprehensive assessment of the athlete’s condition. This score is
 then used to generate personalized recovery advice through a language model, offering tailored
 recommendations to athletes and coaches.
+
 3.4 Data Preprocessing
 The collected data were preprocessed using Python’s Pandas library and other data processing
 tools. The following steps were performed to ensure data quality and suitability for model training:
@@ -266,6 +294,7 @@ using coercion, which replaced non-convertible values with NaN.
 each column to maintain consistency without introducing bias. For categorical variables,
 missing values were imputed using the mode (most frequent value). redicting Overall Athlete Wellness and Injury Risk in Collegiate Tennis Players: A Machine Learning
 Approach 7
+
 (a) Sample Questionnaire (b) Player Wearing WHOOP Device
 (c) Sample WHOOP Data (d) Jump Data Collection Setup
 Fig. 1. Data Collection Methods: (a) Sample Questionnaire, (b) Tennis Player Aryna Sabalenka Wearing a
@@ -433,11 +462,13 @@ Additionally, residual analysis was performed for regression models to validate 
 underlying linear regression. This analysis included assessing the linearity, homoscedasticity,
 independence, and normality of residuals to ensure the robustness and reliability of the regression
 models.
+
 3.8 Code Availability
 The code for data preprocessing, model training, and evaluation is available in a public GitHub
 repository at https://github.com/franciscoerramuspe/masters_thesis. The repository includes all
 scripts necessary to replicate the results discussed in this paper, as well as detailed instructions for
 setting up the environment and running the experiments.
+
 4 RESULTS
 4.1 Overall Wellness Prediction
 We evaluated multiple regression models for predicting the athletes’ Recovery Score (%). The
@@ -450,14 +481,17 @@ Linear Regression with Interaction Terms 10.47 13.58 0.310
 Polynomial Regression 8.23 11.40 0.537
 Lasso Regression 9.76 12.85 0.402
 XGBoost Regressor 3.82 6.81 0.838
+
 4.1.1 Model Performance Comparison. The Polynomial Regression model demonstrated signifi-
 cant improvement over the baseline linear regression model, with an R2 score of 0.537. However,
 the XGBoost Regressor achieved the best performance overall, indicating its superior ability to
 capture complex non-linear relationships in the data.
+
 4.1.2 Predicted vs. Actual Values. Figure 2 illustrates the relationship between the actual and
 predicted recovery scores using the Polynomial Regression model. The scatter plot shows that
 the predicted values closely align with the actual values, as many data points are near the diagonal
 line representing perfect predictions.
+
 4.1.3 Feature Importance. The XGBoost model’s feature importance analysis identified the most
 significant predictors of recovery scores:
 • Heart Rate Variability (ms)
@@ -472,11 +506,14 @@ distribution.
 • Consideration for Future Work: Techniques such as oversampling the minority class (e.g.,
 SMOTE) or using specialized algorithms for imbalanced data were identified as potential
 strategies to improve model performance.
+
 5 DISCUSSION OF RESULTS
+
 The optimization of regression models and the application of ensemble methods have yielded
 substantial improvements in predictive performance, particularly for overall wellness prediction.
 However, injury risk classification remains challenging due to class imbalance and limited sample
 size.
+
 5.1 Overall Wellness Prediction
 The XGBoost Regressor significantly outperformed all linear regression models, achieving an
 R2 score of 0.838 compared to 0.537 for the best-performing Polynomial Regression model. This ndicates that XGBoost is highly effective in capturing the complex non-linear interactions within
@@ -487,11 +524,14 @@ tors, aligning with physiological theories that link these metrics to recovery a
 • Model Robustness: The high R2 score suggests that the model can reliably explain a
 significant portion of the variance in recovery scores, which is valuable for making informed
 decisions in athlete management.
+
 5.2 Injury Risk Classification
 While the XGBoost Classifier showed better performance compared to other models, the overall
 low F1 Scores highlight persistent challenges in accurately predicting injury risks. This is likely
 due to the small sample size and the inherent difficulty in predicting rare events.
+
 Key Insights:
+
 • Class Imbalance: The disparity between injury and non-injury cases adversely affects
 model performance, particularly in predicting the minority class.
 • Model Sensitivity: Enhancing the model’s sensitivity to injury risk is crucial for developing
@@ -523,11 +563,14 @@ Each injury type was labeled accordingly in the dataset, enabling the applicatio
 classifiers to predict the likelihood of specific injury categories.
 XGBoost Application: Using the labeled data, separate XGBoost models were trained for upper
 body and lower body injury predictions. These models demonstrated improved specificity, allowing Predicting Overall Athlete Wellness and Injury Risk in Collegiate Tennis Players: A Machine Learning
+
 Approach 15
 for targeted preventive measures. For instance, identifying a higher risk of upper body injuries
 can prompt interventions like strength training and technique adjustments, while a propensity for
 lower body injuries may lead to focus on flexibility and endurance training.
+
 6 FUTURE WORK
+
 Building on the findings of this study, several avenues for future research are proposed:
 • Expanding the Sample Size: Increasing the number of participants will improve model
 robustness and generalizability.
