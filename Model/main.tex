@@ -1,0 +1,481 @@
+\documentclass[manuscript,acmsmall,review,screen,authorversion=true]{acmart}
+
+\usepackage{lipsum}  % For dummy text, remove in final version
+
+% \setcopyright{acmlicensed}
+% \copyrightyear{2024}
+% \acmYear{2024}
+% \acmDOI{10.1145/1122445.1122456}  % Replace with your actual DOI
+
+% \acmConference[ML in Sports '24]{Conference on Machine Learning in Sports}{July 15--17, 2024}{Boston, MA, USA}
+% \acmISBN{978-1-4503-XXXX-X/24/07}
+
+\begin{document}
+
+\title{\small Predicting Overall Athlete Wellness and Injury Risk in Collegiate Tennis Players: A Machine Learning Approach}
+
+\author{Francisco Erramuspe Alvarez}
+\email{s1365567@monmouth.edu}
+\author{Shobharani Polasa}
+\email{s1365603@monmouth.edu}
+\author{Weihao Qu}
+\email{wqu@monmouth.edu}
+\author{Jay Wang}
+\email{jwang@monmouth.edu}
+\affiliation{%
+  \institution{Department of Computer Science and Software Engineering, Monmouth University}
+  \streetaddress{400 Cedar Avenue}
+  \city{West Long Branch}
+  \state{New Jersey}
+  \postcode{07764}
+  \country{USA}
+}
+
+\newcommand{\wq}[1]{\textcolor{blue}{#1}}
+
+\renewcommand{\shortauthors}{Erramuspe Alvarez et al.}
+
+\begin{abstract}
+\wq{The rapid development of machine learning has positively impacted every aspect of life, including the field of sports. }
+This study investigates the application of machine learning (ML) to predict overall athlete wellness and potential injury risk in collegiate tennis players, aiming to assist coaches and trainers in identifying athletes at risk and implementing personalized interventions to enhance performance and prevent injuries. 
+To this end, 
+% that utilizes data collected from wearable devices, workout logs, sleep patterns, and athlete surveys.
+data from nine collegiate tennis players, encompassing physiological, training, sleep, and self-reported data, were preprocessed and used to train and evaluate statistical models including Linear Regression, XGBoost (Regressor and Classifier), Logistic Regression, Decision Tree, Random Forest\wq{; and deep learning models such as ... }. The results demonstrate the potential of XGBoost in achieving accurate predictions of overall wellness and classifying injury risk, achieving an R-squared of 0.8378 for wellness prediction and an AUC-ROC of 0.6947 for injury risk classification. Despite promising results, the limited sample size calls for further data collection and model refinement to enhance generalizability and clinical applicability. \wq{some about deep learning track, and the comparison..}
+\end{abstract}
+
+% \begin{CCSXML}
+% <ccs2012>
+%  <concept>
+%   <concept_id>10010147.10010257.10010293.10010294</concept_id>
+%   <concept_desc>Computing methodologies~Machine learning</concept_desc>
+%   <concept_significance>500</concept_significance>
+%  </concept>
+%  <concept>
+%   <concept_id>10003120.10003138.10003142</concept_id>
+%   <concept_desc>Human-centered computing~Empirical studies in HCI</concept_desc>
+%   <concept_significance>300</concept_significance>
+%  </concept>
+%  <concept>
+%   <concept_id>10010520.10010521.10010525.10010534</concept_id>
+%   <concept_desc>Computer systems organization~Neural networks</concept_desc>
+%   <concept_significance>100</concept_significance>
+%  </concept>
+% </ccs2012>
+% \end{CCSXML}
+
+% \ccsdesc[500]{Computing methodologies~Machine learning}
+% \ccsdesc[300]{Human-centered computing~Empirical studies in HCI}
+% \ccsdesc[100]{Computer systems organization~Neural networks}
+
+\keywords{Athlete Wellness, Injury Prevention, Machine Learning, Wearable Technology, Collegiate Tennis, XGBoost, Linear Regression, Logistic Regression, Decision Tree, Random Forest}
+
+\maketitle
+
+\section{Introduction}
+Optimizing athletic performance while minimizing the risk of injury is crucial in collegiate sports. Achieving this balance requires a comprehensive understanding of the diverse factors influencing an athlete's well-being, including physiological, psychological, training, and lifestyle factors. Traditional approaches rely heavily on subjective observations and expert assessments, which can be limited in their ability to capture the complex interplay of these factors.
+
+The advent of wearable technology and the increasing use of athlete surveys have ushered in a new era of data-driven approaches to athlete management. These technologies provide a wealth of information about an athlete's physiological responses, training loads, sleep patterns, and subjective experiences, enabling the development of more objective and personalized interventions.
+
+This study explores the potential of machine learning (ML) to leverage this data and predict overall athlete wellness, as well as the risk of potential injuries. 
+\wq{While contact sports like football, soccer, and rugby tend to have the highest injury rates, non-contact sports such as track and field, swimming, and tennis also experience injuries, often due to overuse and repetitive motion. In particular, a significant number of casual tennis players suffer from injuries caused by incorrect playing techniques, with well-known examples including tennis elbow and tennis knee. INCLUDE CITATION }
+This study specifically focuses on collegiate tennis players and employs a variety of ML algorithms to develop a predictive model that integrates physiological data, workout details, sleep information, and self-reported survey responses. \wq{This study has the potential to offer personalized guidance for casual and professional tennis players, helping to protect them from injuries. }
+
+
+\section{Related Work}
+The application of machine learning (ML) in sports analytics has earned significant attention in recent years, particularly in predicting athlete performance and injury risk. Several studies have explored various ML methodologies to help enhance athletic performance and mitigate injury risks, providing a foundation upon which the current study builds.
+
+Claudino et al.~\cite{claudino2019} provided a systematic review of ML applications in sports injury prediction and prevention, noting the predominance of supervised learning approaches like Artificial Neural Networks (ANN), Decision Trees (DT), and Support Vector Machines (SVM). Their review highlighted the effectiveness of ensemble methods in improving prediction accuracy and handling complex, high-dimensional datasets. Similarly, Van Eetvelde et al.~\cite{van2021} emphasized the role of ML in identifying injury risk factors and developing predictive models that assist in proactive injury prevention strategies. \wq{Overall, related studies focus on considering two factors: Machine learning models and Data.}
+
+\subsection{Machine Learning Models}
+ \wq{Several studies have focused on college baseball athletes, utilizing various machine learning models to predict both performance and the likelihood of injury. These insights reinforce the rationale behind our choice of ML models, such as XGBoost, known for its ability to handle diverse feature sets and capture intricate patterns within the data; and neural network architectures such as MLP and LSTM. }
+  
+% \textbf{Performance Prediction in Collegiate Athletics}
+\paragraph{XGBoost Based Performance and Injury Prediction} 
+
+\citet{taber2024} conducted a holistic evaluation of player-, team-, and conference-level performances in Division-1 Women’s basketball using ML techniques. Their study employed data from training, subjective stress, sleep, recovery metrics (collected via WHOOP straps), in-game statistics, and countermovement jumps. Utilizing Extreme Gradient Boosting (XGB) classifiers and regressors, they achieved high accuracy and F1 scores in predicting key performance indicators such as the Reactive Strength Index modified (RSImod), game scores, and Player Efficiency Rating (PER). The ensemble approach, incorporating Random Forest and correlation analyses, underscored the importance of various features across different performance levels. This multi-tiered methodology aligns closely with our approach, which also integrates physiological, training, sleep, and self-reported data to predict overall athlete wellness and injury risk. However, while \citet{taber2024} focused on performance metrics, our study extends this framework to specifically address injury risk classification alongside wellness prediction, thereby offering a more comprehensive tool for athlete management.
+\wq{Another study focused on injury assessment examined sixteen young female basketball players in China using various machine learning models, demonstrating the strong performance of XGBoost in this area~\cite{huang2022novel}. The difference between our work and ~\cite{huang2022novel} is that their study relies on self-reported data from athletes, without utilizing wearable technologies. Additionally, there are notable differences in injury prediction between contact sports like basketball and non-contact sports like tennis.
+}
+\paragraph{Neural Network Based Injury Prediction}
+Still focusing on college basketball athletes, \citet{zhao2022} explored the use of neural networks to predict basketball injuries among college athletes. The study compared traditional Backpropagation (BP) neural networks, Scaled Conjugate Gradient (SCG) neural networks, and Radial Basis Function (RBF) neural networks, finding that RBF networks achieved the highest prediction accuracy of 95.4\%. Zhao emphasized the importance of selecting appropriate ML algorithms to handle the complexities of injury data, highlighting the superior performance of RBF networks in capturing nonlinear relationships inherent in injury predictors. Our research similarly employs advanced ML models, including XGBoost and neural networks (MLP and LSTM), to predict injury risks. By leveraging ensemble methods and deep learning architectures, our study aims to enhance prediction accuracy and model robustness, addressing some of the limitations noted by \citet{zhao2022}, such as the generalizability of models across different sports and genders.
+
+\subsection{Data Choice }
+\wq{The selection of data is also crucial in accurately predicting performance and assessing injury risks.}
+\paragraph{Integration of Wearable Technology and Self-Reported Data}
+
+The integration of wearable technology data with self-reported metrics has been a recurring theme in sports analytics research. 
+\wq{
+It has been reported that self-reported data can effectively provide new insights into the interactions between competition-related stressors experienced by professional athletes and their susceptibility to illness~\cite{thornton2016predicting}.
+The wearable fitness band, Whoop, has been widely adopted in college athletics, including sports such as softball, women's lacrosse, baseball~\cite{romano2023examination}, and wrestling~\cite{gerardi2023exploring}.}
+In the college basketball studies~\cite{taber2024,zhao2022}, the value of combining objective physiological data with subjective measures such as stress and recovery questionnaires is revealed to enhance the predictive power of ML models. Our study similarly amalgamates data from wearable devices, workout logs, sleep patterns, and athlete surveys to create a multifaceted dataset. This comprehensive data integration facilitates a more nuanced understanding of athlete wellness and injury risk, enabling the development of personalized intervention strategies.
+
+\paragraph{Time-Series Data}
+Recent advancements in deep learning, particularly with models like Multi-Layer Perceptrons (MLP) and Long Short-Term Memory (LSTM) networks, have shown promise in capturing temporal dependencies and complex nonlinear relationships in time-series data.
+\wq{In sports like basketball~\cite{taber2024}, volleyball~\cite{de2022personalized}, tennis, and soccer~\cite{nassis2023review}, data is typically collected over seasons, aligning with the characteristics of time series data.}
+ Our implementation of MLP and LSTM models aims to leverage these strengths, enabling the prediction of an athlete's physical capability and readiness based on their physiological and activity metrics over time. This approach not only complements traditional ML models but also addresses the temporal dynamics that are critical in understanding athlete performance and injury risk.
+
+\paragraph{Feature Importance and Explainability}
+Understanding feature importance and ensuring model explainability are crucial for the practical adoption of ML models in sports settings. Taber et al.~\cite{taber2024} utilized Partial Dependence Plots (PDPs) and ensemble feature importance techniques to elucidate the impact of various features on performance metrics. Similarly, our study employs feature importance analyses to identify the most significant predictors of athlete wellness and injury risk, thereby providing actionable insights to coaches and trainers. This emphasis on explainability aligns with the broader trend in ML research towards transparent and interpretable models, which are essential for gaining trust and facilitating informed decision-making in sports management.
+
+\subsection{Limitations and Future Directions}
+Despite the advancements, existing studies often grapple with limitations such as small sample sizes, data imbalance, and the generalizability of models across different populations and sports~\cite{taber2024, zhao2022}. Our study acknowledges these challenges and addresses them through robust data preprocessing, feature engineering, and the implementation of advanced ML techniques. Future research can build upon our findings by expanding the dataset, incorporating more diverse injury types, and exploring federated learning approaches to enhance model scalability and privacy.
+
+In summary, the current body of literature underscores the transformative potential of ML in sports analytics, particularly in performance prediction and injury prevention. Our study contributes to this growing field by developing a comprehensive ML framework that integrates diverse data sources to predict overall athlete wellness and injury risk in collegiate tennis players. By building on the methodologies and insights from prior research, we aim to advance the application of ML in creating safer and more effective training programs for athletes.
+
+
+
+\section{Methods}
+
+\subsection{Participants}
+
+Data were collected from nine collegiate tennis players (Male: 5, Female: 4; Age: 20.3 ± 1.5 years; Height: 175.2 ± 8.7 cm; Weight: 68.9 ± 9.2 kg) over a period of 16 weeks. All participants were informed about the study procedures and provided written consent.
+
+\subsection{Data Collection}
+
+Data were gathered from five distinct sources, each providing unique and complementary information essential for comprehensive analysis:
+
+\begin{enumerate}
+    \item \textbf{Journal Entries:} Daily self-reported responses were collected using online questionnaires administered through Google Forms. These entries included information on alcohol consumption, caffeine intake, calorie tracking, and areas of discomfort such as knees, ankles, and other joints. This qualitative data was crucial for understanding factors that might affect performance and injury risk, offering insights into both lifestyle habits and potential musculoskeletal issues.
+
+    \item \textbf{Physiological Metrics:} Data were collected using WHOOP wearable devices, which provided continuous monitoring of physiological parameters. The metrics collected included:
+    \begin{itemize}
+        \item \textit{Recovery Score (\%):} An overall indicator of an athlete's readiness to perform, based on heart rate variability, resting heart rate, and sleep performance.
+        \item \textit{Resting Heart Rate (bpm):} A measure of cardiovascular fitness and fatigue.
+        \item \textit{Heart Rate Variability (ms):} Reflects autonomic nervous system balance and recovery status.
+        \item \textit{Skin Temperature (°C):} Monitored to detect signs of illness or overtraining.
+        \item \textit{Blood Oxygen Saturation (\%):} Indicates respiratory efficiency and can highlight potential health issues.
+        \item \textit{Day Strain:} Quantifies the cardiovascular load experienced throughout the day.
+        \item \textit{Energy Burned (kcal):} Tracks caloric expenditure to inform nutritional needs.
+        \item \textit{Maximum Heart Rate (bpm):} Provides insights into exertion levels during activities.
+        \item \textit{Average Heart Rate (bpm):} Assesses overall cardiovascular demand.
+        \item \textit{Sleep Metrics:} Detailed data on sleep stages, disturbances, and efficiency.
+    \end{itemize}
+    The use of WHOOP devices allowed for objective, high-resolution physiological data collection, critical for monitoring athlete readiness and recovery.
+
+    \item \textbf{Sleep Data:} Complementing the WHOOP sleep metrics, additional sleep information was gathered to provide a comprehensive view of sleep patterns. This included subjective assessments of sleep quality and any sleep disturbances not captured by the device, collected via daily questionnaires.
+
+    \item \textbf{Workout Data:} Information about the athletes' training sessions was recorded, encompassing tennis practices, matches, and strength and conditioning workouts. Data included duration, intensity, and type of each workout, collected through collaboration with coaching staff and using training logs. This data helped in understanding the physical demands placed on athletes and their potential impact on recovery and performance.
+
+    \item \textbf{Vertical Jump Data:} Measurements of the athletes' explosive lower-body power were obtained using a standardized testing protocol conducted weekly or bi-weekly. Athletes performed three countermovement jumps, and the average jump height (in inches) was recorded. This data provided insights into neuromuscular readiness and fatigue levels.
+\end{enumerate}
+
+Collecting data from these five sources enabled a multidimensional analysis of athlete wellness, performance, and injury risk. The integration of subjective self-reports, objective physiological measurements, sleep assessments, workout details, and performance metrics allowed for a comprehensive understanding of each athlete's condition. This holistic approach is essential for developing personalized interventions and enhancing predictive modeling.
+
+\subsection{Data Preprocessing}
+
+The collected data were preprocessed using Python’s Pandas library and other data processing tools. The following steps were performed to ensure data quality and suitability for model training:
+
+\begin{enumerate}
+    \item \textbf{Data Cleaning:} Placeholder values such as 'N/A', 'Unknown', '--', empty strings, and spaces were replaced with \texttt{NaN} to standardize missing values across the dataset.
+
+    \item \textbf{Data Type Conversion:} Columns were converted to appropriate data types. Numeric columns stored as objects due to formatting issues were converted to numerical data types using coercion, which replaced non-convertible values with \texttt{NaN}.
+
+    \item \textbf{Missing Value Imputation:} Missing numerical values were imputed using the mean of each column to maintain consistency without introducing bias. For categorical variables, missing values were imputed using the mode (most frequent value).
+
+    \item \textbf{Creation of 'Injury Risk' Target Variable:} Injury-related columns were identified by searching for keywords such as 'pain', 'discomfort', 'injury', 'aches', and 'stiffness' in the column names. The column:
+
+    \textit{"Did you experience today any type of pain or discomfort that did not allow you to play tennis/perform daily activities properly? If so, please describe the area."}
+
+    was selected and renamed to \texttt{Injury\_Description} for simplicity. A new binary target variable, \texttt{Injury Risk}, was created, where:
+
+    \begin{itemize}
+        \item \texttt{1} indicates the athlete reported any pain or discomfort affecting performance.
+        \item \texttt{0} indicates no pain or discomfort reported.
+    \end{itemize}
+
+    Variations in responses (e.g., 'No', 'none', 'N/A') were accounted for to accurately categorize injury risk.
+
+    \item \textbf{Feature Selection:} Relevant features were selected based on domain knowledge and their potential predictive power for the target variables, \textit{Recovery Score (\%)} and \textit{Injury Risk}. Features with little to no variance were excluded to improve model performance.
+
+    \item \textbf{Handling Multicollinearity:} Variance Inflation Factor (VIF) analysis was conducted to identify multicollinearity among features. Features with high VIF values were considered for removal or transformation to reduce redundancy and improve model interpretability.
+
+    \item \textbf{Feature Scaling:} Numerical features were standardized using the \textit{StandardScaler} to ensure that each feature contributed equally to the model training process.
+\end{enumerate}
+
+This comprehensive preprocessing approach addressed potential issues such as missing values, inconsistent data types, and multicollinearity, resulting in a clean and reliable dataset for modeling.
+
+\subsection{Feature Engineering}
+
+Building upon the initial feature set, additional features were engineered to enhance the model's ability to capture complex patterns:
+
+\begin{itemize}
+    \item \textbf{Total Sleep Duration:} Calculated by summing "Asleep duration (min)" and "Awake duration (min)", providing a complete measure of sleep over a period.
+
+    \item \textbf{Sleep Debt:} Determined by subtracting "Asleep duration (min)" from "Sleep need (min)", indicating whether an athlete is meeting their sleep requirements.
+
+    \item \textbf{Logarithmic Transformations:} Applied to skewed variables like "Heart Rate Variability (ms)" to normalize their distributions and satisfy linear regression assumptions.
+
+    \item \textbf{Interaction Terms:} Created between key variables such as "Activity Strain" and "Asleep duration (min)" to capture the combined effect on recovery.
+
+    \item \textbf{Polynomial Features:} Generated to allow the model to capture non-linear relationships between predictors and the target variable.
+
+    \item \textbf{Categorical Variable Encoding:} Categorical variables, such as "Activity Name", were converted into numerical format using one-hot encoding to be used in machine learning models.
+\end{itemize}
+
+These engineered features aimed to provide the model with richer information, improving its predictive capability and addressing potential non-linearities in the data. By incorporating domain knowledge into feature creation, we enhanced the model's ability to detect subtle patterns related to athlete wellness and performance.
+
+\subsection{Machine Learning Models}
+
+\subsubsection{Overall Wellness Prediction (Regression)}
+
+To predict the athletes' \textit{Recovery Score (\%)}, both linear and ensemble methods were employed:
+
+\begin{itemize}
+    \item \textbf{Baseline Linear Regression:} A standard linear regression model was initially employed to establish a performance baseline, assuming a linear relationship between the independent variables and the target variable.
+
+    \item \textbf{Linear Regression with Feature Transformation:} To improve linearity and meet model assumptions, logarithmic transformations were applied to skewed features like "Heart Rate Variability (ms)".
+
+    \item \textbf{Linear Regression with Interaction Terms:} Interaction terms were introduced between key features, such as "Activity Strain" and "Asleep duration (min)", to capture the combined effect of multiple variables on recovery scores.
+
+    \item \textbf{Polynomial Regression:} Polynomial features were generated to enable the model to capture non-linear relationships between the predictors and the target variable.
+
+    \item \textbf{Lasso Regression (L1 Regularization):} Lasso regression was utilized for feature selection and to prevent overfitting by penalizing less important features, effectively shrinking their coefficients toward zero.
+
+    \item \textbf{XGBoost Regressor:} An ensemble learning method using gradient boosting, which builds multiple weak predictive models and combines them to produce a powerful ensemble model. XGBoost is known for its ability to handle complex non-linear relationships and interactions between features.
+\end{itemize}
+
+These models were trained and evaluated to determine the most effective approach for predicting recovery scores, with an emphasis on enhancing model performance through advanced feature engineering and leveraging ensemble methods.
+
+\subsubsection{Injury Risk Classification}
+
+In addition to regression models, classification algorithms were employed to predict injury risk based on the collected data. The following models were used:
+
+\begin{itemize}
+    \item \textbf{Logistic Regression:} A statistical model that uses a logistic function to model a binary dependent variable. It is suitable for understanding the impact of various factors on injury risk.
+
+    \item \textbf{XGBoost Classifier:} An ensemble learning method that builds multiple classification trees using gradient boosting. It enhances predictive accuracy by combining the output of individual trees and is effective in handling imbalanced datasets.
+
+    \item \textbf{Decision Tree Classifier:} A tree-structured model that splits the data into subsets based on the value of input features, used for its interpretability and simplicity.
+
+    \item \textbf{Random Forest Classifier:} An ensemble of decision trees, providing improved accuracy and control over overfitting by averaging multiple trees' predictions.
+
+    \item \textbf{Handling Class Imbalance:} Recognizing the imbalance in injury occurrence data, strategies such as adjusting class weights and stratified sampling were considered during model training to improve the models' ability to predict injury occurrences.
+\end{itemize}
+
+These classification models aimed to identify athletes at higher risk of injury by learning patterns and associations within the data.
+
+\subsection{Model Evaluation Metrics}
+
+The following evaluation metrics were used to assess the models:
+
+\begin{itemize}
+    \item \textbf{Regression Metrics:}
+    \begin{itemize}
+        \item \textbf{Mean Absolute Error (MAE):} Measures the average magnitude of errors between predicted and actual values without considering their direction.
+
+        \item \textbf{Root Mean Squared Error (RMSE):} Assesses the model's prediction accuracy by penalizing larger errors more than smaller ones.
+
+        \item \textbf{R-squared (R\textsuperscript{2} Score):} Represents the proportion of variance in the dependent variable that is predictable from the independent variables, indicating the model's explanatory power.
+    \end{itemize}
+
+    \item \textbf{Classification Metrics:}
+    \begin{itemize}
+        \item \textbf{Accuracy:} The proportion of correct predictions over total predictions.
+
+        \item \textbf{F1 Score:} The harmonic mean of precision and recall, providing a balance between the two, especially important in imbalanced datasets.
+
+        \item \textbf{AUC-ROC:} The Area Under the Receiver Operating Characteristic Curve measures the ability of the model to distinguish between classes.
+
+        \item \textbf{Confusion Matrix:} A table used to describe the performance of a classification model by displaying true positives, false positives, true negatives, and false negatives.
+    \end{itemize}
+\end{itemize}
+
+Additionally, residual analysis was performed for regression models to validate the assumptions of linear regression, including linearity, homoscedasticity, independence, and normality of residuals.
+
+\section{Results}
+
+\subsection{Overall Wellness Prediction}
+
+We evaluated multiple regression models for predicting the athletes' \textit{Recovery Score (\%)}. The performance metrics for these models are presented in Table \ref{tab:regression_results}.
+
+\begin{table}[h]
+\caption{Regression Model Performance for Overall Wellness Prediction}
+\label{tab:regression_results}
+\centering
+\begin{tabular}{lccc}
+\hline
+\textbf{Model} & \textbf{MAE} & \textbf{RMSE} & \textbf{R\textsuperscript{2} Score} \\
+\hline
+Baseline Linear Regression & 14.05 & 16.84 & 0.009 \\
+Linear Regression with Feature Transformation & 11.32 & 14.27 & 0.215 \\
+Linear Regression with Interaction Terms & 10.47 & 13.58 & 0.310 \\
+Polynomial Regression & 8.23 & 11.40 & 0.537 \\
+Lasso Regression & 9.76 & 12.85 & 0.402 \\
+\textbf{XGBoost Regressor} & \textbf{3.82} & \textbf{6.81} & \textbf{0.838} \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Model Performance Comparison}
+
+The \textbf{Polynomial Regression} model demonstrated significant improvement over the baseline linear regression model, with an R\textsuperscript{2} score of 0.537. However, the \textbf{XGBoost Regressor} achieved the best performance overall, indicating its superior ability to capture complex non-linear relationships in the data.
+
+\subsubsection{Predicted vs. Actual Values}
+
+Figure \ref{fig:pred_vs_actual} illustrates the relationship between the actual and predicted recovery scores using the \textbf{Polynomial Regression} model. The scatter plot shows that the predicted values closely align with the actual values, as many data points are near the diagonal line representing perfect predictions.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{pred_vs_actual.png} % Replace with the actual figure file
+\caption{Polynomial Regression: Actual vs. Predicted Recovery Scores}
+\label{fig:pred_vs_actual}
+\end{figure}
+
+\subsubsection{Feature Importance}
+
+The XGBoost model's feature importance analysis identified the most significant predictors of recovery scores:
+
+\begin{itemize}
+    \item \textbf{Heart Rate Variability (ms)}
+    \item \textbf{Resting Heart Rate (bpm)}
+    \item \textbf{Activity Strain}
+    \item \textbf{Sleep Performance (\%)}
+    \item \textbf{Jump Height (in)}
+\end{itemize}
+
+These features align with physiological factors known to influence recovery and readiness.
+
+\subsubsection{Residual Analysis}
+
+Residual analysis for the \textbf{Polynomial Regression} model revealed:
+
+\begin{itemize}
+    \item \textbf{Normality of Residuals:} The residuals were approximately normally distributed, as confirmed by a histogram and a Q-Q plot.
+
+    \item \textbf{Homoscedasticity:} The residuals displayed constant variance across all levels of predicted values, satisfying the homoscedasticity assumption.
+
+    \item \textbf{Linearity:} No patterns were observed in the residuals versus predicted values plot, indicating a linear relationship was adequately captured.
+\end{itemize}
+
+These observations suggest that the polynomial regression model not only fits the data well but also meets the key assumptions necessary for reliable inference.
+
+\subsection{Injury Risk Classification}
+
+For injury risk classification, we compared the performance of various classification models. The results are summarized in Table \ref{tab:classification_results}.
+
+\begin{table}[h]
+\caption{Classification Model Performance for Injury Risk Prediction}
+\label{tab:classification_results}
+\centering
+\begin{tabular}{lccc}
+\hline
+\textbf{Model} & \textbf{AUC-ROC} & \textbf{Accuracy} & \textbf{F1 Score} \\
+\hline
+Logistic Regression & 0.546 & 0.849 & 0.000 \\
+\textbf{XGBoost Classifier}  & \textbf{0.695} & 0.852 & 0.100 \\
+Decision Tree Classifier & 0.622 & 0.840 & 0.075 \\
+Random Forest Classifier & 0.678 & 0.850 & 0.092 \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Model Performance Comparison}
+
+The \textbf{XGBoost Classifier} outperformed other models in terms of AUC-ROC and F1 Score, indicating a better ability to distinguish between athletes at risk of injury and those who are not. The high accuracy across all models suggests that the dataset is imbalanced, and the low F1 Scores highlight challenges in predicting the minority class (injury risk).
+
+\subsubsection{Confusion Matrix}
+
+The confusion matrix for the XGBoost Classifier is presented in Figure \ref{fig:confusion_matrix}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6\textwidth]{confusion_matrix.png} % Replace with the actual figure file
+\caption{Confusion Matrix for XGBoost Classifier}
+\label{fig:confusion_matrix}
+\end{figure}
+
+The confusion matrix shows that while the model performs well in identifying non-injury cases, it has limitations in correctly predicting injury occurrences, which is critical for preventive measures.
+
+\subsubsection{Handling Class Imbalance}
+
+To address class imbalance:
+
+\begin{itemize}
+    \item \textbf{Adjusting Class Weights:} The XGBoost Classifier was configured with a \texttt{scale\_pos\_weight} parameter to give more weight to the minority class.
+
+    \item \textbf{Stratified Sampling:} Ensured that the training and testing sets maintained the same class distribution.
+
+    \item \textbf{Consideration for Future Work:} Techniques such as oversampling the minority class (e.g., SMOTE) or using specialized algorithms for imbalanced data were identified as potential strategies to improve model performance.
+\end{itemize}
+
+\section{Discussion of Results}
+
+The optimization of the regression models and the use of ensemble methods resulted in substantial improvements in predictive performance.
+
+\subsection{Overall Wellness Prediction}
+
+The \textbf{XGBoost Regressor} significantly outperformed all linear regression models, achieving an R\textsuperscript{2} score of 0.838 compared to 0.537 for the best-performing polynomial regression model. This suggests that ensemble methods like XGBoost are more adept at capturing the complex non-linear interactions inherent in physiological and performance data.
+
+The feature importance analysis highlighted the critical role of heart rate variability and resting heart rate, aligning with established physiological understanding of recovery and readiness.
+
+\subsection{Injury Risk Classification}
+
+The \textbf{XGBoost Classifier} demonstrated superior performance over other models, highlighting its capability in handling complex patterns and imbalanced data. However, the low F1 Scores indicate a need for strategies to address class imbalance, such as resampling techniques or adjusting classification thresholds.
+
+The high accuracy but low F1 Score underscore the challenge of predicting the minority class (injury occurrences). Effective injury prediction is crucial for preventive measures, and thus, improving the model's sensitivity to injury risk is a priority.
+
+\subsection{Limitations}
+
+\begin{itemize}
+    \item \textbf{Small Sample Size:} With data from only nine athletes, the models may lack generalizability.
+
+    \item \textbf{Class Imbalance:} The rarity of reported injuries led to imbalanced classes, impacting classification performance.
+
+    \item \textbf{Data Quality:} Self-reported data may contain inaccuracies due to subjective biases.
+
+    \item \textbf{Lack of Detailed Injury Data:} The injury data did not specify the type or severity of injuries, limiting the depth of analysis.
+\end{itemize}
+
+\section{Conclusion}
+
+This research demonstrates the promising potential of machine learning, particularly ensemble methods like XGBoost, for athlete wellness prediction and injury risk classification in collegiate tennis.
+
+\begin{itemize}
+    \item \textbf{Key Findings:}
+
+    \begin{itemize}
+        \item Advanced models outperformed traditional linear models in capturing complex relationships.
+
+        \item Physiological metrics collected from wearable devices were valuable predictors of recovery and injury risk.
+
+        \item Handling class imbalance is critical for improving injury risk classification.
+    \end{itemize}
+
+    \item \textbf{Implications:}
+
+    \begin{itemize}
+        \item Coaches and trainers can leverage such models for proactive athlete management.
+
+        \item Personalized interventions can be developed to enhance performance and prevent injuries.
+    \end{itemize}
+\end{itemize}
+
+However, further investigation is needed, focusing on increasing the sample size, collecting detailed injury data, and exploring additional features that contribute to athlete well-being. Addressing data imbalance and enhancing model generalizability are essential steps toward developing reliable predictive tools.
+
+\section{Future Work}
+
+While this study provides valuable insights into the application of machine learning for athlete wellness and injury risk prediction, there are several areas for future research and development:
+
+\begin{itemize}
+    \item \textbf{Expanding the Sample Size:} Increasing the number of participants will improve model generalizability and robustness, allowing the models to capture a broader range of variability in athlete data.
+
+    \item \textbf{Incorporating Detailed Injury Data:} Collecting comprehensive injury records, including the type, severity, and location of injuries, will enhance prediction accuracy and specificity. This data can facilitate the development of models that not only predict injury risk but also identify specific areas of potential injury.
+
+    \item \textbf{Addressing Data Imbalance:} Implementing techniques such as oversampling the minority class (e.g., SMOTE) or utilizing specialized algorithms designed for imbalanced data will improve the models' ability to predict injury occurrences.
+
+    \item \textbf{Integrating Real-Time Data:} Exploring the use of real-time data streams from wearable devices can enable continuous monitoring and timely interventions, potentially preventing injuries before they occur.
+
+    \item \textbf{Developing an Injury Advising System:} Creating a system that provides tailored suggestions to athletes based on their individual data and risk profiles will translate predictive insights into actionable recommendations.
+
+    \item \textbf{Conducting User Studies:} Engaging with athletes and coaches to test the effectiveness and practicality of the predictive tool and its suggestions will provide valuable feedback for refinement.
+
+    \item \textbf{Leveraging Advanced Machine Learning Techniques:} Experimenting with deep learning models, such as Long Short-Term Memory (LSTM) networks, can capture temporal dependencies and complex patterns in sequential data.
+
+    \item \textbf{Implementing Federated Learning:} Utilizing federated learning approaches can leverage data from multiple institutions while maintaining privacy, enhancing model performance without compromising sensitive information.
+\end{itemize}
+
+These future directions will help to further refine and validate the machine learning approaches presented in this study, potentially leading to more robust and widely applicable systems for athlete wellness management and injury prevention. The ultimate goal is to create a comprehensive tool that not only predicts injury risks but also provides actionable, personalized advice to athletes and coaches, thereby improving overall athletic performance and reducing injuries in collegiate sports.
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{main}
+
+\end{document}
